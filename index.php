@@ -6,8 +6,8 @@ $url = 'https://hh.ru/oauth/authorize?response_type=code&client_id=' . $config['
 
 if (isset($_SESSION['token'])){
 	
-	//$murl = "https://api.hh.ru/vacancies?area=2&text='php'"; //получаем вакансии в Спб содержащих в  названии 'php'
-	$murl = "https://api.hh.ru/vacancies/13962685";
+	$murl = "https://api.hh.ru/vacancies?area=2&text='php'"; //получаем вакансии в Спб содержащих в  названии 'php'
+	//$murl = "https://api.hh.ru/vacancies/13962685";
 	///vacancies/{vacancy_id}
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $murl);
@@ -78,5 +78,6 @@ else if (isset($_GET['code'])){
 }
 else
 	echo '<a href="' . $url . '">Auth</a>';
+
 
 ?>
