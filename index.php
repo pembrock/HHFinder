@@ -6,13 +6,15 @@ $url = 'https://hh.ru/oauth/authorize?response_type=code&client_id=' . $config['
 
 if (isset($_SESSION['token'])){
 	
-	$murl = "https://api.hh.ru/vacancies";
-
+	//$murl = "https://api.hh.ru/vacancies?area=2&text='php'"; //получаем вакансии в Спб содержащих в  названии 'php'
+	$murl = "https://api.hh.ru/vacancies/13962685";
+	///vacancies/{vacancy_id}
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $murl);
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 	curl_setopt($ch, CURLOPT_HEADER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	//curl_setopt($ch, CURLOPT_POSTFIELDS, "area=2");
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $_SESSION['token']));	
 	curl_setopt($ch, CURLOPT_USERAGENT, 'users-parse/1.0 (evoldev@evoldev.com)');
 	//curl_setopt($ch, CURLOPT_POSTFIELDS, "text='PHP'");
