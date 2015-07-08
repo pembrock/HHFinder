@@ -20,10 +20,40 @@ if (isset($_SESSION['token'])){
 	//curl_setopt($ch, CURLOPT_POSTFIELDS, "text='PHP'");
 	$html_content = curl_exec($ch);
 	curl_close($ch);
-	
+	/*
 	echo "<pre>";
 	print_r(json_decode($html_content, true));
 	echo "</pre>";
+	die();*/
+
+	$result = json_decode($html_content, true);
+
+	foreach($result['items'] as $k => $v){
+		//echo $v['id'] . "<br>";
+			$murl = "https://api.hh.ru/vacancies/" . $v['id']; //получаем вакансии в Спб содержащих в  названии 'php'
+			//$murl = "https://api.hh.ru/vacancies/13962685";
+			///vacancies/{vacancy_id}
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $murl);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($ch, CURLOPT_HEADER, false);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			//curl_setopt($ch, CURLOPT_POSTFIELDS, "area=2");
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $_SESSION['token']));	
+			curl_setopt($ch, CURLOPT_USERAGENT, 'users-parse/1.0 (evoldev@evoldev.com)');
+			//curl_setopt($ch, CURLOPT_POSTFIELDS, "text='PHP'");
+			$html_content = curl_exec($ch);
+			curl_close($ch);
+
+			
+			$vac_arr = json_decode($html_content, true);
+			foreach($vac_arr['key_skills'] as $v => $k){
+				foreach($k as $key => $value){
+					echo $value . "<br>";
+				}
+			}
+	}
+	
 }
 else if (isset($_GET['code'])){
 	$code = $_GET['code'];
